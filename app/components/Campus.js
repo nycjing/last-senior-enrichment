@@ -10,12 +10,16 @@ const Campus = (props) => {
     const students = props.students;
     console.log(students)
     const instructors = props.instructors;
+
+       // componentDidMount () {
+       //  this.props.fetchOneCampus(campusId);
+       // }
     return (
 
         <div className="campus">
             <div>
                 <h3>{campus.name} Campus</h3>
-                {/*<img src={`../public/img/${campus.name}.jpg`} name={campus.name} height="300" width="300"/>*/}
+                <img src={`/img/${campus.name}.jpg`} name={campus.name} height="300" width="300"/>*/}
             </div>
             <div>
                 <h4>Students List</h4>
@@ -37,7 +41,15 @@ const Campus = (props) => {
     );
 }
 
+const mapState = ({ campuses, students }, ownProps) => {
+const campusId = Number(ownProps.match.params.id);
+    return{
+        campus: _.find(campuses,campus => campus.id === campusId)
+    }
+}
 const mapDispatchToProps = {fetchOneCampus}
-const ConnectedMain = connect(null,mapDispatchToProps)(Campus)
-export default ConnectedMain
+
+export default connect(null,mapDispatchToProps)(Campus)
+
+
 

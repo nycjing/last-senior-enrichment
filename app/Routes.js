@@ -7,31 +7,39 @@ import Root from './components/Root';
 import Students from './components/Students'
 import Campus from './components/Campus'
 import Home from './components/Home'
-import { fectchCampus } from '../reducers/campus'
-import { fetchStudents } from '../reducers/student'
+import { fectchCampus } from './reducers/campus'
+import { fetchStudents , removeStudent} from './reducers/students'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
+
+
+    const history = createBrowserHistory();
 
 
     /* -----------------    COMPONENT     ------------------ */
 
 class Routes extends Component {
 
+
     componentDidMount () {
         this.props.fetchInitialData();
-        console.log(this.props.fetchInitialData());
+
     }
 
     render () {
+        console.log('-------')
+        console.log(this.props.students);
+
         return (
-
+            <Router history={history}>
                 <Root>
-                        <Switch>
-                            <Route exact path="/api/add" component={Home} />
-                            <Route exact path="/api/" component={Students} />
-                            <Route exact path="/api/:id" component={Campus} />
+                         <Switch>
+                             <Route exact path="/" component={Home} />
+                             <Route path="/students" component={Students} />
+                             <Route exact path="/campus/:id" component={Campus} />
 
-                        </Switch>
+                         </Switch>
                 </Root>
-
+        </Router>
         );
     }
 }
@@ -43,7 +51,7 @@ const mapProps = null;
 const mapDispatch = dispatch => ({
     fetchInitialData: () => {
         dispatch(fetchStudents());
-        dispatch(fetchCampus());
+        dispatch(removeStudent());
     }
 });
 

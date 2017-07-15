@@ -1,6 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux'
 
+/* -----------------    COMPONENT     ------------------ */
+
+
+
 const Students = (props) => {
 
     const students = props.students;
@@ -52,3 +56,4 @@ const mapDispatchToProps = (dispatch) => {
 
 const ConnectedStudents = connect(mapStateToProps, mapDispatchToProps)(Students)
 export default ConnectedStudents
+

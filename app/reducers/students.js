@@ -39,17 +39,9 @@ export const fetchStudents = () => dispatch => {
         .then(res => dispatch(init(res.data)));
 };
 
-// delete student
-export const removeStudent = id => dispatch => {
 
-    axios.delete(`/api/${studentId}/delete`)
-        .then( ()=> {
-            dispatch(remove(id));
-        })
-        .catch(err => console.error(err));
-};
 
-export const addStudent = student => dispatch => {
+export const addStudent = (student) => dispatch => {
     axios.post('/api/', student)
         .then(res => dispatch(create(res.data)))
         .catch(err => console.error(err));

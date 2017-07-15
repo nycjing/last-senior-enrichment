@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const initialState = {
-    campus:[]
+    campuses:[]
 }
 /* -----------------    ACTIONS     ------------------ */
 
@@ -9,14 +9,14 @@ const INITIALIZE = 'INITIALIZE';
 
 /* ------------   ACTION CREATORS     ------------------ */
 
-const init  = campusData => ({ type: INITIALIZE, campusData });
+const init  = campuses => ({ type: INITIALIZE, campuses });
 
 /* ------------       REDUCER     ------------------ */
 
-export default function students (state = initialState, action) {
+export default function campus (state = initialState, action) {
     switch(action.type) {
         case INITIALIZE:
-            return action.campusData;
+            return action.campuses;
 
         default: return state;
     }
@@ -34,7 +34,7 @@ export const fetchOneCampus = (id) => dispatch => {
 };
 
 export const fetchCampus = () => dispatch => {
-    axios.get(`/api/${id}`)
+    axios.get(`/api/add`)
         .then(res => dispatch(init(res.data)))
         .catch(err => console.error(err));
 };
