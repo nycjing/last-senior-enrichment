@@ -36,7 +36,7 @@ api.get('/add', function (req, res, next) {
 
     Campus.findAll({})
         .then(function (campuses) {
-            // res.render('addstudent', {campuses: campuses});
+            console.log('getting data')
             res.json(campuses)
         })
         .catch(next);

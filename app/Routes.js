@@ -7,7 +7,7 @@ import Root from './components/Root';
 import Students from './components/Students'
 import Campus from './components/Campus'
 import Home from './components/Home'
-import { fectchCampus } from './reducers/campus'
+import { fetchCampus } from './reducers/campus'
 import { fetchStudents , removeStudent} from './reducers/students'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
@@ -22,6 +22,7 @@ class Routes extends Component {
 
     componentDidMount () {
         this.props.fetchInitialData();
+     
 
     }
 
@@ -51,7 +52,7 @@ const mapProps = null;
 const mapDispatch = dispatch => ({
     fetchInitialData: () => {
         dispatch(fetchStudents());
-        dispatch(removeStudent());
+        dispatch(fetchCampus());
     }
 });
 
