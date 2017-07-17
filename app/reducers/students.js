@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const initialState = {
-    students:[]
+    students:[],
+    campus:[]
 }
 /* -----------------    ACTIONS     ------------------ */
 
@@ -36,10 +37,16 @@ export default function students (state = initialState, action) {
 //get all students data
 export const fetchStudents = () => dispatch => {
     axios.get(`/api/`)
-        .then(res => dispatch(init(res.data)));
+        .then(res => res.data)
+        .then(data => dispatch(init(data)));
 };
 
-
+// delete student
+export const removeStudent = (id) => dispatch => {
+     dispatch(remove(id));
+     axios.delete(`/api/${id}/delete`)
+        .catch(err => console.error(err));
+};
 
 export const addStudent = (student) => dispatch => {
     axios.post('/api/', student)

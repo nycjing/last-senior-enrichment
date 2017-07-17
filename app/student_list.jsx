@@ -31,7 +31,7 @@ const Students = (props) => {
             {
                 students && students.map(student => (
 
-                    <tr >
+                    <tr key={student.id}>
                         <td></td>
                         <td>{ student.name }</td>
                         <td>

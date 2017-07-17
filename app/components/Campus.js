@@ -1,5 +1,5 @@
 import React from 'react';
-import  { fetchOneCampus } from '../reducers/campus';
+import  { fetchOneCampus } from '../store';
 import { connect } from 'react-redux';
 
 const Campus = (props) => {

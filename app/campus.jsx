@@ -5,48 +5,6 @@ import axios from 'axios'
 
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
-// import { connect } from 'react-redux';
-// import { Route, Switch } from 'react-router-dom';
-// import Root from './components/Root';
-// import Students from './components/Students'
-// import Campus from './components/Campus'
-// import Home from './components/Home'
-// import {fetchStudents, fectchCampus} from './store'
-
-const Students = (props) => {
-
-    const students = props.students;
-    console.log(students)
-    return (
-        <table className='table'>
-            <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Campus</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            {
-                students && students.map(student => (
-                    <tr >
-                        <td></td>
-                        <td>{ student.name }</td>
-                        <td>
-                            <span>{ student.campus.name }</span>
-                        </td>
-                        <td>
-                            <input onClick={()=> props.handleRemove(student.id)} type='button' value='x'/>
-                        </td>
-                    </tr>
-                ))
-            }
-            </tbody>
-        </table>
-    );
-}
-
 const Campus = (props) => {
     const campus = props.campus;
     const students = props.students;

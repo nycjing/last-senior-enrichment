@@ -44,20 +44,13 @@ api.get('/add', function (req, res, next) {
 
 // /api
 api.post('/', function (req, res, next) {
-    var campusId= req.body.campus.split(',')[1];
-    var member = {
-        name: req.body.name,
-        email: req.body.email,
-        age: req.body.age,
-        gender: req.body.gender,
-        campusId: +campusId
-    }
+
     if (req.body.dbtable === 'student'){
     var newStudent = Student.build(req.body);
     console.log(newStudent);
     newStudent.save()
         .then(function () {
-            res.send(200)
+            res.json(newStudent)
         })
         .catch(next)}
         else{
@@ -66,7 +59,7 @@ api.post('/', function (req, res, next) {
         console.log(newInstructor);
         newInstructor.save()
             .then(function () {
-                res.send(200)
+                res.json(newInstructor)
             })
             .catch(next)
 

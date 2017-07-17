@@ -2,7 +2,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import axios from 'axios'
-
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 
 // import { connect } from 'react-redux';
@@ -13,58 +12,43 @@ import createBrowserHistory from 'history/lib/createBrowserHistory'
 // import Home from './components/Home'
 // import {fetchStudents, fectchCampus} from './store'
 
+
 class AddStudent extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            student: {
-                name: '',
-                email: '',
-                age: '',
-                campusId: '1'},
-
-            dbtable:''
-        }
-        this.initState = {
             name: '',
             email: '',
             age: '',
-            campusId: '',
+            campusId: '1',
             dbtable:''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleAdd = this.handleAdd.bind(this)
+       
     }
 
     handleChange(evt) {
-        console.log('whats they typing?  ', this.state)
-        if (evt.target.name === "campusId") console.log('target--id',evet.target.id)
         this.setState({[evt.target.name]: evt.target.value});
     }
 
     handleAdd(evt) {
-
         evt.preventDefault();
-        console.log('need to seend out', this.state)
         const studentData = this.state;
-
-        console.log(studentData.dbtable)
-        axios.post('/api/', studentData)
-            .then(() => {
-                console.log('student is added to the list')
-                return this.props.setState({
-                    students:
-                        [studentData, ...this.props.students]
-                })
-               /* return this.setState(this.initState)*/
-            })
-            .catch(err => console.error(err));
+        this.props.addStudent(studentData)
+        this.setState( {
+            name: '',
+            email: '',
+            age: '',
+            campusId: '1',
+            dbtable:''
+        })
     }
 
     render() {
         const campuses = this.props.campuses
-
+        const students = this.props.students
         return (
             <form onSubmit={this.handleAdd} className='form-horizontal'>
                 <section>
@@ -93,10 +77,9 @@ class AddStudent extends React.Component {
                         <label className="col-sm-2 control-label">Campus</label>
                         <div className="col-sm-10">
                             <select name="campusId" className="form-control" onChange={this.handleChange}>
-
-                                {
+                               {
                                     campuses && campuses.map(campus => (
-                                        <option  className="form-control" key={campus.id}>{campus.name}</option>
+                                        <option  className="form-control" key={campus.id} value={campus.id}>{campus.name}</option>
                                     ))
                                 }
                             </select>
@@ -125,7 +108,36 @@ class AddStudent extends React.Component {
                         <button type="submit" className="btn btn-primary">submit</button>
                     </div>
                 </section>
-            </form>
+            
+                  <table className='table'>
+            <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Campus</th>
+           
+            </tr>
+            </thead>
+            <tbody>
+            {
+                students && students.map(student => (
+
+                    <tr key={student.id}>
+                        <td></td>
+                        <td>{ student.name }</td>
+                        <td>
+                            <span >{ student.campus.name }</span>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                ))
+            }
+            </tbody>
+        </table>
+        </form>
+ 
     );
     }
     }
@@ -134,8 +146,11 @@ class AddStudent extends React.Component {
         constructor() {
         super()
         this.state = {
+        students:[],
         campuses:[]
-    }
+        }
+        this.handleRemove = this.handleRemove.bind(this)
+        this.addStudent = this.addStudent.bind(this)
     }
 
         componentDidMount () {
@@ -145,14 +160,46 @@ class AddStudent extends React.Component {
             console.log('list of campusus----',campuses)
         this.setState({campuses})
     })
+        axios.get('/api/')
+        .then(res => res.data)
+        .then(students => {
+            console.log('list of students----',students)
+        this.setState({students})
+    })
 
     }
+
+       handleRemove (studentId) {
+        	console.log(studentId)
+        axios.delete(`/api/${studentId}/delete`)
+            .then( ()=> {
+                return this.setState({
+                    students: this.props.students.filter(student => student.id !== studentId)
+                })
+            })
+            .catch(err => console.error(err));
+    }
+
+    addStudent (studentData){
+    	
+        axios.post('/api/', studentData)
+            .then(res=>res.data)
+            .then((student) => {
+            	 console.log(student)
+            	 student.campus={}
+                this.setState({
+                    students: [...this.state.students,student] 
+                })
+            })
+            .catch(err => console.error(err));
+            console.log('this state:', this.state.students)
+        }
 
         render () {
         return (
         <div>
-        <h1>Student List</h1>
-        <AddStudent campuses={this.state.campuses} />
+        <h1>Add to List</h1>
+        <AddStudent campuses={this.state.campuses} students={this.state.students} addStudent={this.addStudent}/>
         </div>
         )
     }

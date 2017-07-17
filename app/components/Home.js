@@ -1,36 +1,26 @@
 import React from 'react';
 
+import { Link } from 'react-router-dom';
+
 const Home = (props) => {
 
+    const campuses = this.props.campuses
     return (
         <div className="section">
 
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-6 col-md-6 col-sm-12">
-                        <a href="/campus/1">
-                            <h3>Griffindor</h3>
-                            <img src="/img/Griffindor.jpg" name="Griffindor" height="300" width="300"/>
-                        </a>
-                    </div>
+                <div className="col-lg-6 col-md-6 col-sm-12">
+             {
+               campuses && campuses.map(campus => (
+                
+                        <Link to = {`/campus/${campus.id}`} >
+                        <h3>{campus.name}</h3>
+                        <img src={`/img/${campus.name}.jpg`} name={campus.name} height="300" width="300"/>
+                        </Link> 
+                 ))
+            }
 
-                    <div className="col-lg-6 col-md-6 col-sm-12">
-                        <a href="/campus/3">
-                            <h3>Slytherin</h3>
-                            <img src="/img/Slytherin.jpg" name="Slytherin" height="300" width="300"/>
-                        </a>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-12">
-                        <a href="/campus/2">
-                            <h3>Ravenclaw</h3>
-                            <img src="/img/Ravenclaw.jpg" name="Ravenclaw" height="300" width="300"/>
-                        </a>
-                    </div>
-                    <div className="col-lg-6 col-md-6 col-sm-12">
-                        <a href="/campus/4">
-                            <h3>Hufflepuff</h3>
-                            <img src="/img/Hufflepuff.jpg" name="Hufflepuff" height="300" width="300"/>
-                        </a>
                     </div>
                 </div>
             </div>

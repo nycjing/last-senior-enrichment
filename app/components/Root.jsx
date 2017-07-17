@@ -16,7 +16,6 @@ const Root = ({children}) => (
                 </div>
             </div>
         </nav>
-        <Navbar />
         { children }
         <div className="container">
             <div className="row">

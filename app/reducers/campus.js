@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const initialState = {
-    campuses:[]
+    campuses:[],
+    students:[]
 }
 /* -----------------    ACTIONS     ------------------ */
 
